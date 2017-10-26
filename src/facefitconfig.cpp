@@ -20,7 +20,7 @@
 #include "facefitconfig.h"
 #include "ui_facefitconfig.h"
 #include <QFileDialog>
-#include <QPushbutton>
+#include <QPushButton>
 #include <QFileInfo>
 #include <QMessageBox>
 
