@@ -22,25 +22,25 @@ cmake_minimum_required(VERSION 2.8.11)
 project (FLAT)
 
 # Version data and header file
-set (CT_VERSION_MAJOR 1)
-set (CT_VERSION_MINOR 0)
-set (CT_VERSION_PATCH 0)
-set (CT_VERSION "${CT_VERSION_MAJOR}.${CT_VERSION_MINOR}.${CT_VERSION_PATCH}")
+set (FLAT_VERSION_MAJOR 1)
+set (FLAT_VERSION_MINOR 0)
+set (FLAT_VERSION_PATCH 0)
+set (FLAT_VERSION "${CT_VERSION_MAJOR}.${CT_VERSION_MINOR}.${CT_VERSION_PATCH}")
 configure_file (
-  "${PROJECT_SOURCE_DIR}/version.h.in"
-  "${PROJECT_BINARY_DIR}/version.h"
+        "${PROJECT_SOURCE_DIR}/version.h.in"
+        "${PROJECT_BINARY_DIR}/version.h"
 )
-include_directories("${PROJECT_BINARY_DIR}")
 
 # Default build type if none was specified
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
-  # Set the possible values of build type for cmake-gui
-  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release"
-    "MinSizeRel" "RelWithDebInfo")
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+    # Set the possible values of build type for cmake-gui
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release"
+            "MinSizeRel" "RelWithDebInfo")
 endif()
 
 # Qt configuration
+set(CMAKE_PREFIX_PATH /home/software/Qt5.12.3/5.12.3/gcc_64/lib/cmake)
 set(CMAKE_INCLUDE_CURRENT_DIR ON) # Find includes in corresponding build directories
 set(CMAKE_AUTOMOC ON) # Instruct CMake to run moc automatically when needed
 set(CMAKE_AUTORCC ON) # Instruct CMake to run rcc automatically when needed
@@ -59,8 +59,11 @@ if(WIN32)
 else()
     add_executable(FLAT ${SRC} ${RSC})
 endif()
-set_target_properties(FLAT PROPERTIES OUTPUT_NAME flat)
-set_target_properties(FLAT PROPERTIES OUTPUT_NAME_DEBUG flatd)
 
+# include version.h cfg
+target_include_directories(FLAT PUBLIC ${PROJECT_BINARY_DIR})
 # Set up the required libraries
 target_link_libraries(FLAT Qt5::Core Qt5::Widgets Qt5::Xml)
+
+set_target_properties(FLAT PROPERTIES OUTPUT_NAME flat)
+set_target_properties(FLAT PROPERTIES OUTPUT_NAME_DEBUG flatd)
